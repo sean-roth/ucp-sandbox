@@ -15,6 +15,12 @@ Endorsed by: Shopify, Target, Walmart, Stripe, PayPal, Visa, Mastercard, and 20+
 
 This is table stakes for the AI economy. Learn it now.
 
+## Key Insight
+
+> "If Google's own sample code has unhandled exceptions, imagine what businesses will ship."
+
+The reference implementation is a starting point, not production code. See [LESSONS_LEARNED.md](docs/LESSONS_LEARNED.md) for what we found breaking it.
+
 ## Goals
 
 1. **Understand both sides** - Build agents that shop AND merchants that sell
@@ -29,7 +35,9 @@ ucp-sandbox/
 ├── docs/
 │   ├── LEARNING_PLAN.md      # Week-by-week learning roadmap
 │   ├── NOTES.md              # Running notes and observations
-│   └── RESOURCES.md          # Links to specs, repos, docs
+│   ├── RESOURCES.md          # Links to specs, repos, docs
+│   ├── LESSONS_LEARNED.md    # Hard-won implementation knowledge
+│   └── CHAOS_TESTING.md      # Breaking the reference implementation
 ├── experiments/
 │   ├── 01-discovery/         # UCP manifest discovery
 │   ├── 02-checkout/          # Checkout session flow
@@ -59,8 +67,28 @@ ucp-sandbox/
 ## Status
 
 - [x] Repository created
-- [ ] Learning plan drafted
-- [ ] UCP samples running locally
-- [ ] Mock merchant built
+- [x] Learning plan drafted
+- [x] UCP samples running locally
+- [x] Happy path tested (9 seconds, 7 steps)
+- [x] Chaos testing complete (found bugs!)
+- [ ] Mock merchant built (from scratch, not copy)
+- [ ] Pre-flight validation pattern implemented
 - [ ] Agent discovery working
 - [ ] Clara integration complete
+
+## What We've Learned So Far
+
+**The protocol is simple:** 4 REST endpoints + a discovery manifest.
+
+**The implementation is hard:**
+- Schema strictness breaks agents that send incomplete requests
+- External dependencies (agent profile fetch) block the hot path
+- No business logic validation in reference code
+- Error handling has gaps (500s where 404s should be)
+
+**The opportunity is real:**
+- First-mover window: 6-12 months
+- Consulting: $15-25K per implementation
+- Most businesses will copy sample code and ship bugs
+
+See [docs/NOTES.md](docs/NOTES.md) for the full learning journal.
